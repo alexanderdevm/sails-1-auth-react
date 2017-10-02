@@ -1,6 +1,6 @@
 # Sails 1.0 beta with webkit + auth + react + redux
 
-This project is manily desined for porting my sails auth to sails 1.0 and then adding react+readux login form project
+This project is manily desined for porting my sails auth to sails 1.0 and then adding react+readux login form project.
 
 ### sails-webpack-seed
 
