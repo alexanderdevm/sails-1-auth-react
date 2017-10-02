@@ -1,0 +1,28 @@
+{
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "plugins": ["react"],
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true,
+      "spread": true,
+      "restParams": true,
+      "jsx-uses-vars": ["error"],
+      "jsx-uses-react": [2]
+    }
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "rules": {
+    "no-unused-vars": 2,
+    "no-undef": 2,
+    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "strict": [2, "function"],
+    "no-console": "off"
+  },
+  "parser": "babel-eslint"
+}
