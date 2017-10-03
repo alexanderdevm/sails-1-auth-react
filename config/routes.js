@@ -32,7 +32,7 @@ module.exports.routes = {
   // },
 
   'GET /*': {
-    fn: function (req, res, next) {
+    fn: function(req, res, next) {
       if (req.path.match(/\..*/g)) {
         return next();
       } else {
@@ -51,15 +51,15 @@ module.exports.routes = {
    * for configuration options and examples.                                  *
    *                                                                          *
    ***************************************************************************/
-  'get /login': {
-    view: 'login'
-  },
+  // 'get /login': {
+  //   view: 'login'
+  // },
 
   'post /_/login': 'UserController.loginLdap',
 
-  '/_/logout': 'UserController.logout',
+  '/_/logout': 'UserController.logout'
 
-  'get /signup': {
-    view: 'signup'
-  }
+  // 'get /signup': {
+  //   view: 'signup'
+  // }
 };
