@@ -18,35 +18,34 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
  */
 
 module.exports.webpack = {
-
   /***************************************************************************
-  *                                                                          *
-  * Create one item in the `entry` dictionary for each page in your app.     *
-  *                                                                          *
-  ***************************************************************************/
+   *                                                                          *
+   * Create one item in the `entry` dictionary for each page in your app.     *
+   *                                                                          *
+   ***************************************************************************/
   entry: {
-    'homepage': './assets/js/homepage.js'
+    homepage: './assets/js/homepage.js',
+    index: './assets/app/index.js'
   },
 
-
   /***************************************************************************
-  *                                                                          *
-  * Output bundled .js files with a `.bundle.js` extension into              *
-  * the `.tmp/public/js` directory                                           *
-  *                                                                          *
-  ***************************************************************************/
+   *                                                                          *
+   * Output bundled .js files with a `.bundle.js` extension into              *
+   * the `.tmp/public/js` directory                                           *
+   *                                                                          *
+   ***************************************************************************/
   output: {
     filename: 'js/[name].bundle.js',
     path: path.resolve(__dirname, '..', '.tmp', 'public')
   },
 
   /***************************************************************************
-  *                                                                          *
-  * Set up a couple of rules for processing .css and .less files. These will *
-  * be extracted into their own bundles when they're imported in a           *
-  * JavaScript file.                                                         *
-  *                                                                          *
-  ***************************************************************************/
+   *                                                                          *
+   * Set up a couple of rules for processing .css and .less files. These will *
+   * be extracted into their own bundles when they're imported in a           *
+   * JavaScript file.                                                         *
+   *                                                                          *
+   ***************************************************************************/
   module: {
     rules: [
       // Extract less files
@@ -58,17 +57,24 @@ module.exports.webpack = {
       {
         test: /\.less$/,
         loader: ExtractTextPlugin.extract({ use: 'css-loader!less-loader' })
+      },
+      {
+        test: /\.js?/,
+        include: path.resolve(__dirname, '..', 'assets', 'app'),
+        loader: 'babel-loader',
+        options: {
+          presets: ['react', 'env', 'stage-2']
+        }
       }
-    ],
+    ]
   },
 
   /***************************************************************************
-  *                                                                          *
-  * Set up some plugins to help with Sails development using Webpack.        *
-  *                                                                          *
-  ***************************************************************************/
+   *                                                                          *
+   * Set up some plugins to help with Sails development using Webpack.        *
+   *                                                                          *
+   ***************************************************************************/
   plugins: [
-
     // This plugin extracts CSS that was imported into .js files, and bundles
     // it into separate .css files.  The filename is based on the name of the
     // .js file that the CSS was imported into.
@@ -84,8 +90,7 @@ module.exports.webpack = {
     // This plugin copies the `images` and `fonts` folders into
     // the .tmp/public folder.  You can add any other static asset
     // folders to this list and they'll be copied as well.
-    new CopyWebpackPlugin([
-      {
+    new CopyWebpackPlugin([{
         from: './assets/images',
         to: path.resolve(__dirname, '..', '.tmp', 'public', 'images')
       },
@@ -95,5 +100,4 @@ module.exports.webpack = {
       }
     ])
   ]
-
 };

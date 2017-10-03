@@ -18,8 +18,28 @@ module.exports.routes = {
    *                                                                          *
    ***************************************************************************/
 
-  '/': {
-    view: 'homepage'
+  // '/': {
+  //   view: 'index'
+  // },
+
+  // 'GET /*': {
+  //   fn: function (req, res) {
+  //     //return res.send('req', req);
+  //     console.log('req', req.url);
+  //     return res.ok();
+  //   },
+  //   skipAssets: false
+  // },
+
+  'GET /*': {
+    fn: function (req, res, next) {
+      if (req.path.match(/\..*/g)) {
+        return next();
+      } else {
+        return res.view('index');
+      }
+    },
+    skipAssets: true
   },
 
   /***************************************************************************
