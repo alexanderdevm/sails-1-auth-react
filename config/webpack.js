@@ -6,6 +6,9 @@ var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+var webpack = require('webpack');
+
+console.log(process.env.NODE_ENV);
 
 /**
  * A basic Webpack config to use with a Sails app.
@@ -79,10 +82,15 @@ module.exports.webpack = {
     // it into separate .css files.  The filename is based on the name of the
     // .js file that the CSS was imported into.
     new ExtractTextPlugin('styles/[name].bundle.css'),
-
     // This plugin cleans out your .tmp/public folder before lifting.
-    new CleanWebpackPlugin(['public'], {
-      root: path.resolve(__dirname, '..', '.tmp'),
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: [path.resolve(__dirname, '..', '.tmp')],
+      cleanAfterEveryBuildPatterns: [
+        '!images/**/*',
+        '!fonts/**/*',
+        '!js/**/*',
+        '!styles/**/*'
+      ],
       verbose: true,
       dry: false
     }),
@@ -90,14 +98,23 @@ module.exports.webpack = {
     // This plugin copies the `images` and `fonts` folders into
     // the .tmp/public folder.  You can add any other static asset
     // folders to this list and they'll be copied as well.
-    new CopyWebpackPlugin([{
+    new CopyWebpackPlugin([
+      {
         from: './assets/images',
         to: path.resolve(__dirname, '..', '.tmp', 'public', 'images')
       },
       {
         from: './assets/fonts',
         to: path.resolve(__dirname, '..', '.tmp', 'public', 'fonts')
+      },
+      {
+        from: './assets/styles',
+        to: path.resolve(__dirname, '..', '.tmp', 'public', 'styles')
       }
-    ])
+    ]),
+
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+    })
   ]
 };

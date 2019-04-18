@@ -30,7 +30,7 @@ module.exports.models = {
    ***************************************************************************/
 
   migrate: 'safe',
-  datastore: 'default',
+  datastore: 'local',
   /***************************************************************************
    *                                                                          *
    * Base attributes that are included in all of your models by default.      *
